@@ -1,7 +1,4 @@
-// Question: Pourquoi créer des services séparés ?
-// Réponse: 
-
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
 
 // Fonctions utilitaires pour MongoDB
 async function findOneById(collection, id) {

@@ -1,8 +1,3 @@
-// Question : Pourquoi créer un module séparé pour les connexions aux bases de données ?
-// Réponse : 
-// Question : Comment gérer proprement la fermeture des connexions ?
-// Réponse : 
-
 const { MongoClient } = require('mongodb');
 const redis = require('redis');
 const config = require('./env');
