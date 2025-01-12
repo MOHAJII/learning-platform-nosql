@@ -1,28 +1,39 @@
-  const express = require('express');
-  const config = require('./config/env');
-  const db = require('./config/db');
+const express = require("express");
+const config = require("./config/env");
+const db = require("./config/db");
 
-  const courseRoutes = require('./routes/courseRoutes');
-  const studentRoutes = require('./routes/studentRoutes');
+const courseRoutes = require("./routes/courseRoutes");
+const studentRoutes = require("./routes/studentRoutes");
 
-  const app = express();
+const app = express();
 
-  async function startServer() {
-    try {
-      const mongoClient = 
-      // TODO: Initialiser les connexions aux bases de données
-      // TODO: Configurer les middlewares Express
-      // TODO: Monter les routes
-      // TODO: Démarrer le serveur
-    } catch (error) {
-      console.error('Failed to start server:', error);
-      process.exit(1);
-    }
+async function startServer() {
+  try {
+    config.validateEnv();
+
+    await db.connectMongo;
+    await db.connectRedis;
+
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+
+    app.use("/api/courses", courseRoutes);
+
+    const server = app.listen(config.port, () => {
+      console.log("Server start with port " + config.port);
+    });
+
+    process.on("SIGTERM", async () => {
+      console.log("SIGTERM signal received. Closing server...");
+      await new Promise((resolve) => server.close(resolve));
+      await db.closeConnections();
+      console.log("Server closed");
+      process.exit(0);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
   }
+}
 
-  // Gestion propre de l'arrêt
-  process.on('SIGTERM', async () => {
-    // TODO: Implémenter la fermeture propre des connexions
-  });
-
-  startServer();
+startServer();

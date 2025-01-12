@@ -18,7 +18,7 @@ function validateEnv() {
   }
 }
  
-validateEnv();
+
 
 module.exports = {
   mongodb: {
@@ -28,5 +28,6 @@ module.exports = {
   redis: {
     uri: process.env.REDIS_URI
   },
-  port: process.env.PORT || 3000
+  port: process.env.PORT || 3000,
+  validateEnv
 };
