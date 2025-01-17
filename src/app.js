@@ -1,6 +1,7 @@
 const express = require("express");
 const config = require("./config/env");
 const db = require("./config/db");
+const cors = require('cors');
 
 const courseRoutes = require("./routes/courseRoutes");
 //const studentRoutes = require("./routes/studentRoutes");
@@ -14,6 +15,11 @@ async function startServer() {
     await db.connectMongo;
     await db.connectRedis;
 
+    app.use(cors({
+      origin: 'http://localhost:3001', // Replace with your frontend URL
+      methods: 'GET,POST,PUT,DELETE', // Allowed methods
+      credentials: true              // Include cookies if needed
+    }));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 

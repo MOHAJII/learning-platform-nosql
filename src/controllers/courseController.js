@@ -45,7 +45,7 @@ async function getCourses(req, res) {
 
     const realCourses = await mongoService.findMany("courses");
     if (realCourses) {
-      await redisService.cacheData(cacheKey, realCourses);
+      await redisService.cacheData(cacheKey, realCourses, 100);
       return res.json(realCourses);
     }
     return res.status(404).json({ error: "Course not found" });
@@ -58,7 +58,6 @@ async function getCourses(req, res) {
 async function getCoursesStats(req, res) {
   const cachedKey = 'course:stats';
   const cachedStats = await redisService.getCacheData(cachedKey);
-
   try {
     if (cachedStats)
       return res.json(cachedStats)
