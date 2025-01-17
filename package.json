@@ -10,9 +10,9 @@
     "MongoDB",
     "Redis",
     "GLSID, II-BDCC, II-CCN"
-  ],
+  ], 
   "author": "Abdelaziz DAAIF",
-  "license": "ISC",
+  "license": "ISC", 
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

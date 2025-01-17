@@ -6,7 +6,7 @@ const redisService = require("../services/redisService");
 async function createCourse(req, res) {
   try {
     const course = req.body;
-    const result = await mongoService.insertOne(course);
+    const result = await mongoService.insertOne("courses", course);
     res.status(201).json(result);
   } catch (error) {
     console.error("Create course error:", error);
@@ -34,7 +34,28 @@ async function getCourse(req, res) {
   }
 }
 
-async function getStats(req, res) {
+async function getCourses(req, res) {
+  try {
+    const { id } = req.params;
+    const cacheKey = `courses:${id}`;
+
+    const cachedCourses = await redisService.getCacheData(cacheKey);
+    
+    if (cachedCourses) return res.json(cachedCourses);
+
+    const realCourses = await mongoService.findMany("courses");
+    if (realCourses) {
+      await redisService.cacheData(cacheKey, realCourses);
+      return res.json(realCourses);
+    }
+    return res.status(404).json({ error: "Course not found" });
+  } catch (error) {
+    console.error('Get course error:', error);
+    res.status(500).json({ error: 'Failed to get course' });
+  }
+}
+
+async function getCoursesStats(req, res) {
   const cachedKey = 'course:stats';
   const cachedStats = await redisService.getCacheData(cachedKey);
 
@@ -42,7 +63,7 @@ async function getStats(req, res) {
     if (cachedStats)
       return res.json(cachedStats)
   
-    const courses = await mongoService.findMany('course');
+    const courses = await mongoService.findMany('courses');
     const status = {
       total: courses.length,
     }
@@ -59,5 +80,6 @@ async function getStats(req, res) {
 module.exports = {
   createCourse,
   getCourse,
-  getStats
+  getCourses,
+  getCoursesStats
 };

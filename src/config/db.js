@@ -5,14 +5,9 @@ const config = require("./env");
 let mongoClient, redisClient, db;
 
 async function connectMongo() {
+  console.log("Mongo try to connect");
   try {
-    mongoClient = new MongoClient(config.mongodb.uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000,
-      maxPoolSize: 10
-    });
-
+    mongoClient = new MongoClient(config.mongodb.uri);
     await mongoClient.connect();
     db = mongoClient.db(config.mongodb.dbName);
     console.log("Connected to MongdDB");
@@ -46,7 +41,6 @@ async function connectRedis() {
 module.exports = {
   connectMongo,
   connectRedis,
-  closeConnections,
   getDb: () => db,
   getRedisClient: () => redisClient
 };
