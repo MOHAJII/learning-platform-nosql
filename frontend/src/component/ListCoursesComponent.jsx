@@ -10,7 +10,7 @@ const ListCoursesComponent = () => {
     useEffect(() => {
         listCourses().then((response) => {
             setCourses(response.data);
-            console.log("courses");
+            console.log("list courses");
             
         }).catch(error => {
             console.log(error);
@@ -44,7 +44,7 @@ const ListCoursesComponent = () => {
                         {
                             courses.map(course => (
                                 <tr key={course.id}>
-                                    <td className="table-borders">{course.id}</td>
+                                    <td className="table-borders">{course._id}</td>
                                     <td className="table-borders">{course.name}</td>
                                     <td className="table-borders">{course.description}</td>
                                     <td className="table-borders">{course.price}</td>

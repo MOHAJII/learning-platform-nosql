@@ -35,9 +35,23 @@ async function findMany(collectionName = "courses", query = {}, options = {}) {
   }
 }
 
+async function deleteOneById(collectionName = "courses", id) { 
+  try {
+    const database = await db.connectMongo();
+    console.log(id);
+    return await database.collection(collectionName).deleteOne(
+      {"_id": id},
+    )
+  } catch (error) {
+    console.error("MongoDB deleteById error: ", error);
+    throw error;
+  }
+}
+
 // Export des services
 module.exports = {
   findOneById, 
   insertOne, 
-  findMany
+  findMany,
+  deleteOneById
 };

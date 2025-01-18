@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import FooterComponent from './component/FooterComponent'
 import HeaderComponent from './component/HeaderComponent'
-import EmployeeComponent from './component/EmployeeComponent'
 import ListCoursesComponent from './component/ListCoursesComponent'
+import AddCourse from './component/AddCourse'
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
           </Route>
           <Route path='/employees' element={<ListCoursesComponent />}>
           </Route>
-          <Route path='/add-course' element={<EmployeeComponent />}>
+          <Route path='/add-course' element={<AddCourse />}>
           </Route>
         </Routes>
         <FooterComponent />

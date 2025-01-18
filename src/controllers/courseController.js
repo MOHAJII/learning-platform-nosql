@@ -36,8 +36,7 @@ async function getCourse(req, res) {
 
 async function getCourses(req, res) {
   try {
-    const { id } = req.params;
-    const cacheKey = `courses:${id}`;
+    const cacheKey = `courses:1`;
 
     const cachedCourses = await redisService.getCacheData(cacheKey);
     
@@ -76,9 +75,20 @@ async function getCoursesStats(req, res) {
 
 }
 
+async function deleteCourse(req, res) {
+  try {
+    const { id } = req.params;
+    const result = await mongoService.deleteOneById("courses", id);
+    return res.json(result)
+  } catch (error) {
+    console.error("delete course error:", error);
+  }
+}
+
 module.exports = {
   createCourse,
   getCourse,
   getCourses,
-  getCoursesStats
+  getCoursesStats,
+  deleteCourse
 };
