@@ -16,9 +16,9 @@ async function startServer() {
     await db.connectRedis;
 
     app.use(cors({
-      origin: 'http://localhost:3001', // Replace with your frontend URL
-      methods: 'GET,POST,PUT,DELETE', // Allowed methods
-      credentials: true              // Include cookies if needed
+      origin: 'http://localhost:3001',
+      methods: 'GET,POST,PUT,DELETE', 
+      credentials: true             
     }));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));

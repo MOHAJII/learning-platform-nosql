@@ -1,9 +1,8 @@
-import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { addCourses } from '../services/CourseService';
 
 const AddCourse = () => {
-    const REST_API_BASE_URL = "http://localhost:3000/api/courses/";
-
+    const navigator = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -12,9 +11,9 @@ const AddCourse = () => {
         course.name = formData.get("name");
         course.description = formData.get("description");
         course.price = formData.get("price");
-        axios.post(REST_API_BASE_URL, course);
-        navigator('/add-course');
-
+        addCourses(course).then(() => { console.log("Course added");
+        })
+        navigator('/employees');
     };
 
     return (

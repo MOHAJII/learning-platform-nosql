@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path='/' element={<ListCoursesComponent />}>
           </Route>
-          <Route path='/employees' element={<ListCoursesComponent />}>
+          <Route path='/courses' element={<ListCoursesComponent />}>
           </Route>
           <Route path='/add-course' element={<AddCourse />}>
           </Route>
